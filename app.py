@@ -50,7 +50,7 @@ def load_data():
         df = pd.read_csv('web_traffic_data.csv')
         
         # Parse date column - your format is DD-MM-YYYY HH:MM
-        df['date'] = pd.to_datetime(df['date'], format='%d-%m-%Y %H:%M')
+        df["date"] = pd.to_datetime(df["date"], format="mixed", dayfirst=True, errors="coerce")
         
         # Create derived columns
         df['date_only'] = df['date'].dt.date
