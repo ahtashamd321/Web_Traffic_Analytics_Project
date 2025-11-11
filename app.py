@@ -46,11 +46,28 @@ st.markdown("""
 def load_data():
     """Load and preprocess the web traffic data"""
     df = pd.read_csv('web_traffic_data.csv')
-    pd.to_datetime(df['date'], format="%d-%m-%Y %H:%M:%S", errors='coerce')
+    
+    # Try multiple date formats
+    try:
+        # First try with the standard format
+        df['date'] = pd.to_datetime(df['date'], format='%d-%m-%Y %H:%M', errors='coerce')
+    except:
+        try:
+            # Try alternative format without specifying format
+            df['date'] = pd.to_datetime(df['date'], errors='coerce')
+        except:
+            # Last resort - try mixed format
+            df['date'] = pd.to_datetime(df['date'], format='mixed', errors='coerce')
+    
+    # Remove rows where date parsing failed
+    df = df.dropna(subset=['date'])
+    
+    # Create derived date columns
     df['date_only'] = df['date'].dt.date
     df['hour'] = df['date'].dt.hour
     df['day_of_week'] = df['date'].dt.day_name()
     df['week'] = df['date'].dt.isocalendar().week
+    
     return df
 
 # Calculate KPIs
@@ -157,7 +174,16 @@ def main():
     
     try:
         # Load data
-        df = load_data()
+        with st.spinner('Loading data...'):
+            df = load_data()
+        
+        # Check if data is empty after date parsing
+        if df.empty:
+            st.error("❌ No valid data found after date parsing. Please check your date format.")
+            st.info("Expected date format: DD-MM-YYYY HH:MM (e.g., 01-01-2024 00:00)")
+            st.stop()
+        
+        st.success(f"✓ Loaded {len(df):,} records successfully")
         
         # Sidebar filters
         st.sidebar.header("📊 Filters")
