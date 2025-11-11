@@ -67,6 +67,18 @@ def load_data():
 @st.cache_data
 def calculate_kpis(df):
     """Calculate key performance indicators"""
+    
+    def format_number(num):
+        """Format large numbers into human-readable strings (e.g., 1.2M, 450K)"""
+        if num >= 1_000_000_000:
+            return f"{num / 1_000_000_000:.1f}B"
+        elif num >= 1_000_000:
+            return f"{num / 1_000_000:.1f}M"
+        elif num >= 1_000:
+            return f"{num / 1_000:.1f}K"
+        else:
+            return str(int(num))
+    
     total_sessions = df['sessions'].sum()
     total_users = df['users'].sum()
     total_conversions = df['conversions'].sum()
@@ -75,12 +87,12 @@ def calculate_kpis(df):
     conversion_rate = (total_conversions / total_sessions * 100) if total_sessions > 0 else 0
     
     return {
-        'total_sessions': total_sessions,
-        'total_users': total_users,
-        'total_conversions': total_conversions,
-        'avg_bounce_rate': avg_bounce_rate,
-        'avg_session_duration': avg_session_duration,
-        'conversion_rate': conversion_rate
+        'total_sessions': format_number(total_sessions),
+        'total_users': format_number(total_users),
+        'total_conversions': format_number(total_conversions),
+        'avg_bounce_rate': round(avg_bounce_rate, 2),
+        'avg_session_duration': round(avg_session_duration, 2),
+        'conversion_rate': round(conversion_rate, 2)
     }
 
 # Page performance analysis
