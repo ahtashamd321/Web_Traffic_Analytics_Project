@@ -429,8 +429,8 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 **Ahtasham Anjum**
 
-- GitHub: [@yourusername](https://github.com/ahtashamd321)
-- LinkedIn: [Your LinkedIn](https://linkedin.com/in/ahtasham-anjum)
+- GitHub: (https://github.com/ahtashamd321)
+- LinkedIn: (https://linkedin.com/in/ahtasham-anjum)
 
 ## 🙏 Acknowledgments
 
@@ -440,8 +440,8 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## 📧 Support
 
-- **Issues**: [GitHub Issues](https://github.com/ahtashamd321/web-analytics-dashboard/issues)
-- **Discussions**: [GitHub Discussions](https://github.com/ahtashamd321/web-analytics-dashboard/discussions)
+- **Issues**: (https://github.com/ahtashamd321/web-analytics-dashboard/issues)
+- **Discussions**: (https://github.com/ahtashamd321/web-analytics-dashboard/discussions)
 - **Email**: ahtashamd321@gmail.com
 
 ---
