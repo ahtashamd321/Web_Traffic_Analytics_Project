@@ -46,7 +46,7 @@ st.markdown("""
 def load_data():
     """Load and preprocess the web traffic data"""
     df = pd.read_csv('web_traffic_data.csv')
-    pd.to_datetime(df['date'], infer_datetime_format=True, errors='coerce')
+    pd.to_datetime(df['date'], format="%d-%m-%Y %H:%M:%S", errors='coerce')
     df['date_only'] = df['date'].dt.date
     df['hour'] = df['date'].dt.hour
     df['day_of_week'] = df['date'].dt.day_name()
