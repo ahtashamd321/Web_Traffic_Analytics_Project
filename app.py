@@ -231,20 +231,20 @@ def main():
     # Display KPIs
     st.header("📈 Key Performance Indicators")
     col1, col2, col3, col4, col5, col6 = st.columns(6)
-    
+
     with col1:
-        st.metric("Total Sessions", f"{kpis['total_sessions']:,.0f}")
+        st.metric("Total Sessions", kpis['total_sessions'])
     with col2:
-        st.metric("Total Users", f"{kpis['total_users']:,.0f}")
+        st.metric("Total Users", kpis['total_users'])
     with col3:
-        st.metric("Total Conversions", f"{kpis['total_conversions']:,.0f}")
+        st.metric("Total Conversions", kpis['total_conversions'])
     with col4:
         st.metric("Conversion Rate", f"{kpis['conversion_rate']:.2f}%")
     with col5:
         st.metric("Avg Bounce Rate", f"{kpis['avg_bounce_rate']*100:.1f}%")
     with col6:
         st.metric("Avg Session Duration", f"{kpis['avg_session_duration']:.0f}s")
-    
+
     st.markdown("---")
     
     # Create tabs
