@@ -211,19 +211,25 @@ def main():
         default=sorted(df['country'].unique())
     )
     
-    # Filter data
-    mask = (
-        (df['date_only'] >= date_range[0]) & 
-        (df['date_only'] <= date_range[1]) &
-        (df['page'].isin(selected_pages)) &
-        (df['device'].isin(selected_devices)) &
-        (df['country'].isin(selected_countries))
-    )
-    filtered_df = df[mask]
-    
+    # --- Safe Filter Section ---
+    # Check that the user selected both start and end dates
+    if isinstance(date_range, (list, tuple)) and len(date_range) == 2:
+        mask = (
+            (df['date_only'] >= date_range[0]) &
+            (df['date_only'] <= date_range[1]) &
+            (df['page'].isin(selected_pages)) &
+            (df['device'].isin(selected_devices)) &
+            (df['country'].isin(selected_countries))
+        )
+        filtered_df = df[mask]
+
     if filtered_df.empty:
         st.warning("No data available for the selected filters. Please adjust your selection.")
         return
+    else:
+        st.warning("⚠️ Please select both a start and an end date to view the data.")
+        filtered_df = df.copy()
+
     
     # Calculate KPIs
     kpis = calculate_kpis(filtered_df)
