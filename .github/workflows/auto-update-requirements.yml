@@ -1,0 +1,32 @@
+name: Auto Update Requirements
+
+on:
+  schedule:
+    - cron: "0 0 * * 0"  # Every Sunday midnight (UTC)
+  workflow_dispatch:      # Manual trigger option
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install pip-tools
+        run: pip install pip-tools
+
+      - name: Compile latest dependencies
+        run: pip-compile --upgrade -o requirements.txt requirements.in
+
+      - name: Commit and push updates
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git add requirements.txt
+          git diff --quiet && echo "No changes" || (git commit -m "Auto-update dependencies" && git push)
