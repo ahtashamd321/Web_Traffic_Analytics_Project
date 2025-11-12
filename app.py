@@ -223,9 +223,9 @@ def main():
         )
         filtered_df = df[mask]
 
-    if filtered_df.empty:
-        st.warning("No data available for the selected filters. Please adjust your selection.")
-        return
+        if filtered_df.empty:
+            st.warning("No data available for the selected filters. Please adjust your selection.")
+            return
     else:
         st.warning("⚠️ Please select both a start and an end date to view the data.")
         filtered_df = df.copy()
